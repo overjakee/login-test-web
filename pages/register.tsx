@@ -1,27 +1,28 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { saveToken } from '../utils/auth';
-import { login } from '../services/authService';
+import api from '../services/api';
+import { register } from '../services/authService';
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const router = useRouter();
   const [form, setForm] = useState({ username: '', password: '' });
   const [error, setError] = useState('');
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await login(form);
-      saveToken(res.data.access_token);
-      router.push('/employees');
+      await register(form);
+      alert('Registered! Now login.');
+      router.push('/');
     } catch (err) {
-      setError('Invalid username or passworddasd');
+      setError('Registration failed. Try again.');
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-md p-8">
-        <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">Sign in to your account</h1>
+        <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">Create an account</h1>
 
         {error && <p className="text-red-500 text-sm mb-4 text-center">{error}</p>}
 
@@ -54,18 +55,17 @@ export default function LoginPage() {
             type="submit"
             className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-200"
           >
-            Login
+            Register
           </button>
         </form>
 
-        {/* ปุ่มไปหน้า Register */}
         <p className="text-sm text-center text-gray-500 mt-4">
-          Don't have an account?{' '}
+          Already have an account?{' '}
           <span
             className="text-blue-600 cursor-pointer hover:underline"
-            onClick={() => router.push('/register')}
+            onClick={() => router.push('/')}
           >
-            Register here
+            Login
           </span>
         </p>
       </div>
