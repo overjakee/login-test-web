@@ -4,7 +4,7 @@ import { EmployeeCreateDto, EmployeeUpdateDto } from '../models/Employee';
 const employeeService = {
   getEmployees: () => api.get('/employees'),
   createEmployee: (data: EmployeeCreateDto) => api.post('/employees', data),
-  updateEmployee: (id: string, data: EmployeeUpdateDto) => api.put(`/employees/${id}`, data),
+  updateEmployee: (id: string, data: EmployeeUpdateDto) => api.patch(`/employees/${id}`, data),
   deleteEmployee: (id: string) => api.delete(`/employees/${id}`),
 };
 
